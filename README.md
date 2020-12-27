@@ -36,5 +36,5 @@ bee run
 - [x] Contest page
 - [ ] flag dynamic anti-cheat
 - [ ] Dynamic delivery of containers
-- [ ]Beautiful front-end page under container dynamics
+- [ ] Beautiful front-end page under container dynamics
 - [x] Initialization page (configuration database when first loaded, etc.)
