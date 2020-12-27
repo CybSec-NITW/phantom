@@ -1,0 +1,64 @@
+{{template "component/base.html" .}}
+{{define "head"}}
+<title>Add Subject</title>
+<style>
+    body {
+        background: url(/static/img/base.jpg) no-repeat center fixed;
+        background-size: cover;
+    }
+
+    #addform {
+        background-color: white;
+        opacity: 0.8;
+        padding: 5%;
+        margin-top: 5%;
+    }
+</style>
+{{end}}
+
+{{define "body"}}
+<div class="container">
+    <div class="col-md-12" id="addform">
+        {{if .adderror}}
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{.flash.error}}
+        </div>
+        {{end}}
+        <h3 style="text-align: center;">Add title</h3>
+        <form action="/admin/subjects/add" method="POST">
+            {{ .xsrfdata }}
+            <div class="form-group">
+                <label for="subname">Title name</label>
+                <input type="text" name="subname" required placeholder="please enter" autocomplete="off" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="subtype">Question type</label>
+                <input type="text" name="subtype" required placeholder="please enter" autocomplete="off" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="subflag">flag</label>
+                <input type="text" name="subflag" required placeholder="please enter" autocomplete="off" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="submark">Points</label>
+                <input type="number" name="submark" required placeholder="please enter" autocomplete="off" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="subdescribe">Title description (support MarkDown)</label>
+                <textarea name="subdescribe" placeholder="Please enter content" rows="5" class="form-control"></textarea>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" name="ifhidden">
+                    Hide question
+                </label>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <button type="submit" class="btn btn-primary">Add </button>
+                <button type="reset" class="btn btn-dark">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+{{end}}

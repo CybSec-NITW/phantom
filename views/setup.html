@@ -1,0 +1,92 @@
+{{template "component/base.html" .}}
+{{define "head"}}
+<title>Set Up</title>
+<style>
+  body {
+    background: url(/static/img/base.jpg) no-repeat center fixed;
+    background-size: cover;
+  }
+
+  #signinform {
+    background-color: white;
+    opacity: 0.8;
+    padding: 5%;
+    margin-top: 5%;
+  }
+</style>
+{{end}}
+
+{{define "body"}}
+
+<div class="container">
+  <div class="col-md-12" id="signinform">
+    {{if .Error}}
+    <div class="alert alert-danger alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{.flash.error}}
+    </div>
+    {{end}}
+    {{if .Notice}}
+    <div class="alert alert-success alert-dismissible fade show">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      {{.flash.notice}}
+    </div>
+    {{end}}
+    <h3 style="text-align: center;">installation</h3>
+    <br>
+    <form action="/setup" method="POST">
+      {{ .xsrfdata }}
+      <div class="form-group">
+        <label for="gamename">Competition name:</label>
+        <input name="gamename" required placeholder="Please enter the name of the competition" autocomplete="off" type="text" class="form-control"
+          maxlength="30">
+      </div>
+      <div class="form-group">
+        <label for="adminname">Administrator username:</label>
+        <input name="adminname" required placeholder="Please enter the administrator username" autocomplete="off" type="text" class="form-control"
+          maxlength="30">
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">Administrator password:</label>
+        <input type="password" name="password" required placeholder="Please enter password" autocomplete="off" class="form-control"
+          maxlength="30" id="password" onblur="checkPass();">
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">confirm password:</label>
+        <input type="password" name="veripassword" onblur="checkPass();" required placeholder="Please enter the password again"
+          autocomplete="off" maxlength="30" class="form-control" id="password_check">
+      </div>
+      <div id="warning" style="color: red;"></div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" name="email" class="form-control" required autocomplete="off" placeholder="Enter email"
+          maxlength="40">
+      </div>
+      <div class="form-group">
+      <label for="sel1">Please select a database:</label>
+      <select class="form-control" id="sel1">
+        <option>sqlite</option>
+      </select>
+      </div>
+      <br>
+      <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-dark">Reset</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function checkPass() {
+    if (document.getElementById("password").value !=
+      document.getElementById("password_check").value) {
+      document.getElementById("warning").innerHTML = "Two password entries are inconsistent";
+    } else {
+      document.getElementById("warning").innerHTML = "";
+    }
+  }
+</script>
+{{end}}

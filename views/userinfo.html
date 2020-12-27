@@ -1,0 +1,65 @@
+{{template "component/base.html" .}}
+{{define "head"}}
+<title>User Info</title>
+<style>
+  body {
+    background: url(/static/img/base.jpg) no-repeat center fixed;
+    background-size: cover;
+  }
+
+  #indexwrapper {
+    color: beige;
+    padding: 5%;
+    margin-top: 5%;
+  }
+</style>
+{{end}}
+
+{{define "body"}}
+
+
+<div class="container" id="indexwrapper">
+  <div class="clearfix" style="margin-bottom: 10px;"></div>
+  <div class="clearfix" style="margin-bottom: 10px;"></div>
+  <div class="row">
+    <div class="col-12" style="text-align: center;">
+      <div style="font-size: 300%;font-family: 'Times New Roman', Times, serif;">{{.UserInfo.Username}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="text-align: center;">
+      <div style="font-size: 200%;font-family: 'Times New Roman', Times, serif;">mailbox: {{.UserInfo.Email}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="text-align: center;">
+      <div style="font-size: 100%;font-family: 'Times New Roman', Times, serif;">Ranking: {{.UserInfo.Rank}}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="text-align: center;">
+      <div style="font-size: 100%;font-family: 'Times New Roman', Times, serif;">Score: {{.UserInfo.Mark}}</div>
+    </div>
+  </div>
+  <table class="table table-dark table-hover">
+    <thead>
+      <tr>
+        <th>Numbering</th>
+        <th>topic</th>
+        <th>Question score</th>
+        <th>Submission tim</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range $index, $elem := .UserInfo.SubmitTable}}
+      <tr onclick="javascript:window.location.href='#'">
+        <td>{{addone $index}}</td>
+        <td>{{$elem.SubjectName}}</td>
+        <td>{{$elem.SubjectPoint}}</td>
+        <td>{{$elem.SubmitTime}}</td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+</div>
+{{end}}

@@ -1,0 +1,80 @@
+{{template "component/base.html" .}}
+{{define "head"}}
+<title>Game Setting</title>
+<style>
+    body {
+        background: url(/static/img/base.jpg) no-repeat center fixed;
+        background-size: cover;
+    }
+
+    #usersettingform {
+        background-color: white;
+        opacity: 0.8;
+        padding: 5%;
+        margin-top: 5%;
+    }
+</style>
+{{end}}
+
+{{define "body"}}
+<div class="container">
+    <div class="col-md-12" id="usersettingform">
+        {{if .Error}}
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{.flash.error}}
+        </div>
+        {{else if .Notice}}
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{.flash.notice}}
+        </div>
+        {{end}}
+        <h3 style="text-align: center;">Game settings</h3>
+        <br>
+        <form action="/admin/gamesetting" method="POST">
+            {{ .xsrfdata }}
+            <div class="form-group">
+                <label for="gamename">Competition name:</label>
+                <input name="gamename" required  placeholder="Please enter the game name" autocomplete="off"
+                    type="text" class="form-control" maxlength="30" value="{{.game.GameName}}">
+            </div>
+            <div class="form-group">
+                <label for="name">domain name:</label>
+                <input type="url" name="domainname" placeholder="Please enter the link to the contest page" autocomplete="off"
+                    class="form-control" maxlength="100" value="{{.game.GameUrl}}">
+            </div>
+            <div class="form-group">
+                <label for="name">Mail Server:</label>
+                <input type="url" name="emailserver"  placeholder="Please enter mail server" autocomplete="off"
+                    class="form-control" maxlength="100" value="{{.game.EmailHost}}">
+            </div>
+            <div class="form-group">
+                <label for="name">Mail server port:</label>
+                <input type="number" name="emailport"  placeholder="Please enter the mail server port" autocomplete="off"
+                    class="form-control" maxlength="100" value="{{.game.EmailPort}}">
+            </div>
+            <div class="form-group">
+                <label for="name">Mail account name:</label>
+                <input type="text" name="emailaccount" placeholder="Please enter your email account name" autocomplete="off"
+                    class="form-control" maxlength="100" value="{{.game.EmailAcount}}">
+            </div>
+            <div class="form-group">
+                <label for="name">Email account password:</label>
+                <input type="password" name="emailpass"  placeholder="Please enter your email account password" autocomplete="off"
+                    class="form-control" maxlength="100" value="{{.game.EmailPass}}" >
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" name="ifuseemail" class="form-check-input"  {{if .game.IfUseEmail}} checked="checked" {{end}}>Verify email when registering
+                </label>
+              </div>
+            <br>
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-primary">modify</button>
+                <button type="reset" class="btn btn-dark">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+{{end}}

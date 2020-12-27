@@ -1,0 +1,59 @@
+{{template "component/base.html" .}}
+{{define "head"}}
+<title>Login</title>
+<style>
+  body {
+    background: url(/static/img/base.jpg) no-repeat center fixed;
+    background-size: cover;
+  }
+
+  #loginform {
+    background-color: white;
+    opacity: 0.8;
+    padding: 5%;
+    margin-top: 5%;
+  }
+</style>
+{{end}}
+
+{{define "body"}}
+<div class="container">
+  <div class="col-md-12" id="loginform">
+    {{if .Error}}
+    <div class="alert alert-danger alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{.flash.error}}
+    </div>
+    {{end}}
+    <h3 style="text-align: center;">log in</h3>
+    <br>
+    <form action="/login" method="POST">
+      {{ .xsrfdata }}
+      <div class="form-group">
+        <label for="username">username:</label>
+        <input name="username" required lay-verify="required" placeholder="please enter user name" autocomplete="off" type="text"
+          class="form-control" maxlength="30">
+      </div>
+
+      <div class="form-group">
+        <label for="pwd">password:</label>
+        <input type="password" name="password" required lay-verify="required" placeholder="Please enter password" autocomplete="off"
+          class="form-control" maxlength="30">
+      </div>
+      <div class="form-group">
+        <label for="pwd">Verification code:</label>
+        <input type="text" name="captcha" required lay-verify="required" placeholder="please enter verification code" autocomplete="off"
+          class="form-control" maxlength="30">
+          {{create_captcha}}
+      </div>
+      {{.Success}}
+      <br>
+      <div style="text-align: center;">
+        <button type="submit" class="btn btn-primary">log in</button>
+        <a href="/signup" class="btn btn-success">register</a>
+        <button type="reset" class="btn btn-dark">Reset</button>
+      </div>
+    </form>
+  </div>
+</div>
+{{end}}
